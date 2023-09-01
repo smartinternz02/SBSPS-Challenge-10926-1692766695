@@ -43,3 +43,20 @@ sns.heatmap(conf_matrix, annot=True, cmap='Blues', fmt='d')
 plt.xlabel('Predicted')
 plt.ylabel('Actual')
 plt.show()
+## deploying
+import pickle
+pickle.dump(best_svm_model, open("placement.pkl", 'wb'))
+loaded_model = pickle.load(open('placement.pkl', 'rb'))
+
+from flask import Flask, render_template, request
+app = Flask(__name__)
+
+import pickle
+import joblib
+
+model = pickle.load(open('placement.pkl', 'rb'))
+ct = joblib.load('placement.pkl')
+
+@app.route('/')
+def hello():
+  return render_template("index.html")
